@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         editor = pref.edit();
         Log.d("version",version);
         Log.d("path_api",path);
-        _checkLoginServer("https://api.isbapps.com/api/init","asd");
+        _checkLoginServer("https://api.isbapps.com/api/domain","asd");
     }
     public void _checkLoginServer(final String URLSERVER, String client_hostname){
         progress = ProgressDialog.show(MainActivity.this, "", "Connect to server", true);
@@ -66,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
                         /* showMessage("info",response,"ok");*/
                         try {
                             JSONObject datalogin = new JSONObject(response);
-                            Log.d("token",datalogin.getString("token"));
-                            token_db = datalogin.getString("token");
+                            Log.d("domain",datalogin.getString("domain"));
+                            domain_db = datalogin.getString("domain");
 
-                            if(token_db.equals("")) {
+                            if(domain_db.equals("")) {
                                 Thread timerThread = new Thread() {
                                     public void run() {
                                         try {
@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
                                         }catch(InterruptedException e){
                                             e.printStackTrace();
                                         }finally{
+                                            editor.putString("domain", domain_db);
+                                            editor.apply();
                                             finish();
                                             Intent intent = new Intent(getApplicationContext(),Website.class);
                                             startActivity(intent);
@@ -119,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
 //                params.put("username", PHONE);
                 params.put("client_hostname", client_hostname);
-                params.put("typedevice", "phone");
                 return params;
             }
         };
