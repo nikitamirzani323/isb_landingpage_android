@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">pgsoft</string>
+    <string name="version">0.0.1</string>
+    <string name="path_api">https://api.isbapps.com/</string>
 </resources>
